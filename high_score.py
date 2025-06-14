@@ -1,0 +1,2 @@
+WINNER = "royce"
+HIGHEST_SCORE = 188

@@ -12,7 +12,7 @@ from shot import Shot
 
 
 class Player(CircleShape):
-    def __init__(self, x: int, y: int):
+    def __init__(self, x: float, y: float):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation: int = 0
         self.timer: float = 0

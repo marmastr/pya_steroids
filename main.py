@@ -1,21 +1,33 @@
-import sys
+import argparse
 import pygame
 from asteroid import Asteroid
-import asteroidfield
-import constants
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from player import Player
 from asteroidfield import AsteroidField
 from shot import Shot
+from scored import scorer
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-n",
+    "--name",
+    dest="name",
+    default="Anonymous",
+    help="file in directory you wish to import",
+    type=str,
+)
+args = parser.parse_args()
 
 
 def main():
+    score: int = 0
     print("Starting Asteroids!")
-    print(f"Screen width: {constants.SCREEN_WIDTH}")
-    print(f"Screen height: {constants.SCREEN_HEIGHT}")
+    print(f"Screen width: {SCREEN_WIDTH}")
+    print(f"Screen height: {SCREEN_HEIGHT}")
 
     _, _ = pygame.init()
 
-    screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     ticker = pygame.time.Clock()
     dt = 0
@@ -31,10 +43,9 @@ def main():
     Shot.containers = (shots, updateable, drawable)
 
     field_of_rocks = AsteroidField()
-    player = Player(x=constants.SCREEN_WIDTH / 2, y=constants.SCREEN_HEIGHT / 2)
+    player = Player(x=SCREEN_WIDTH / 2, y=SCREEN_HEIGHT / 2)
 
     i = 0
-    score = 0
     while i < 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -49,8 +60,7 @@ def main():
                     bullet.kill()
                     score += 1
             if rock.collision(player):
-                print("Score: ", score)
-                sys.exit(0)
+                scorer(score, args.name)
 
         _ = screen.fill("black")
 
