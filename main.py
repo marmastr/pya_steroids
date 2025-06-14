@@ -34,6 +34,7 @@ def main():
     player = Player(x=constants.SCREEN_WIDTH / 2, y=constants.SCREEN_HEIGHT / 2)
 
     i = 0
+    score = 0
     while i < 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -46,8 +47,9 @@ def main():
                 if rock.collision(bullet):
                     rock.split()
                     bullet.kill()
+                    score += 1
             if rock.collision(player):
-                print("Game over!")
+                print("Score: ", score)
                 sys.exit(0)
 
         _ = screen.fill("black")
