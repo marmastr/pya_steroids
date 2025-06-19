@@ -1,2 +1,2 @@
-WINNER = "royce"
+WINNER = "ROYCE"
 HIGHEST_SCORE = 188

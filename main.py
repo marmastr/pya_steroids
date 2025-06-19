@@ -16,6 +16,22 @@ parser.add_argument(
     help="file in directory you wish to import",
     type=str,
 )
+parser.add_argument(
+    "-ns",
+    "--no-save",
+    dest="no_save",
+    default=False,
+    help="do not save high-score",
+    type=bool,
+)
+parser.add_argument(
+    "-ct",
+    "--cheater",
+    dest="cheater",
+    default=False,
+    help="rocks kill rocks",
+    type=bool,
+)
 args = parser.parse_args()
 
 
@@ -59,8 +75,21 @@ def main():
                     rock.split()
                     bullet.kill()
                     score += 1
+            if args.cheater:
+                for other_rock in asteroids:
+                    if rock.position == other_rock.position:
+                        continue
+                    rock.split()
+                    other_rock.split()
+                    score += 1
             if rock.collision(player):
-                scorer(score, args.name)
+                scorer(score, args)
+
+        print(
+            f"{args.name}'s current score is: {score}    ",
+            end="\r",
+            flush=True,
+        )
 
         _ = screen.fill("black")
 
